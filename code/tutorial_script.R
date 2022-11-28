@@ -18,8 +18,18 @@ library(glmmTMB) # generate zero-inflated mixed models
 # Load Invasive Species Data----
 invasive <- read.csv(file = 'data/invasive.csv')
 
+# Visualize the data set
+head(invasive)
+str(invasive)
+
+# Show the explanatory variable
+unique(invasive$Disturbance_Type) 
+
+# Show the response variable
+unique(invasive$Bracken_stands)
+
 # Data analysis----
-# Create histogram of initial distribution
+# Create a histogram of initial distribution
 # Appears to follow a poisson distribution, with non-negative count data
 (hist_invasive <- ggplot(invasive, aes(x = Bracken_stands)) +
     geom_histogram(colour = "black", fill = "#006633", bins = 15) +
@@ -41,7 +51,6 @@ sum(invasive$Bracken_stands == 0)/nrow(invasive) # ~49% of the observations are 
 # Research question: Does the road type (road vs. hiking trail affect the number of bracken stands)?
 # Build a basic poisson model
 # 'family' symbolizes the type of probability distribution used to model the response variable
-# 
 summary(poisson_model <- glm(Bracken_stands~Disturbance_Type, data = invasive, family = poisson))
 
 # Check for overdispersion, which is calculated by dividing the residual deviance by the residual degrees of freedom
