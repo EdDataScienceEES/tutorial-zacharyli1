@@ -140,7 +140,7 @@ Despite the large number of zero observations, the data appears to roughly follo
 
 ## First model
 
-We can begin our modelling process by fitting a basic poisson model to our bracken data.
+When we begin to model data distributions with count data, it is common to start with a poisson regression. We can begin our modelling process by fitting a basic poisson model to our bracken data. 
 
 ``` r
  # Build a basic poisson model
@@ -198,5 +198,11 @@ By comparing AIC values, we can deduce that the poisson model we have constructe
 ***
 
 ## Negative Binomial Response
+
+One way to address our issue of overdispersed data is to use a Negative Binomial Regression. The negative binomial regression also describes non-negative count data similar to the Poisson distribution, except it does not hold the assumption that the mean and the variance are the same. 
+
+
+
+
 
 
