@@ -159,6 +159,8 @@ ggsave(filename = "figures/bracken_stand_boxplot.png", bracken_boxplot, device =
 
 The box plot generated should look something like this: ![](../figures/bracken_stand_boxplot.png)
 
+From this initial box plot, we can see that the data distributions within groups does not appear to be normal or exhibit identical variances. This is quite a common feature in ecological data! This will have implications as we build on model complexity, but for now it is good to keep this in mind.
+
 Now that we have a good idea of how our data is distributed as well as our variables of interest, we can proceed to build our first model!
 
 ------------------------------------------------------------------------
@@ -218,6 +220,8 @@ The '1' included in the null model is R speak for only estimating the intercept.
 AIC(mod_null, poisson_model)
 ```
 
+Here is the output of the model comparison: ![](../figures/tutorial_images/poisson_null_AIC.png)
+
 By comparing AIC values, we can deduce that the poisson model we have constructed fits the data better than a null model, which is encouraging. However, the high dispersion ratio of the poisson model makes it difficult to trust the results. Next, we will explore the negative binomial response model, which does a much better job at fitting overdispersed data!
 
 ------------------------------------------------------------------------
@@ -238,6 +242,21 @@ For this tutorial, we will use the **glm.nb** function from MASS to fit our nega
 summary(negbinom_model <- glm.nb(Bracken_stands~Disturbance_Type, data = invasive))
 ```
 
-The format of the summary goes as follows. Below the call and deviance residuals aare the estimated regression coefficients for each variable in the model along with the standard error, z-scores, and p-value.
+Here is what the summary table should look like: ![](../figures/tutorial_images/negbinom_summary.png)
 
-According to our model, the variable road type has a statistically significant effect on the number of bracken stands (p \< 0.01). The variable has a coefficient of 0.7656, meaning that the expected log count of bracken stands is 0.7656 higher in
+The format of the summary goes as follows. Below the call and deviance residuals are the estimated regression coefficients for each variable in the model along with the standard error, z-scores, and p-value.
+
+According to our model, the variable road type has a statistically significant effect on the number of bracken stands (p \< 0.01). The variable has a coefficient of 0.7656, meaning that the expected log count of bracken stands is 0.7656 higher in footpaths due to the effect of road type.
+
+The **glm.nb** function characterizes the data based on the negative binomial error distribution and also includes an extra term theta, which is the overdispersion parameter. So far, we have recognized that our data was overdispersed, and selected a model to rectify some of the shortcomings of our previous Poisson model. In fact, let us compare the model fit of our two models using AIC.
+
+``` r
+AIC(poisson_model, negbinom_model)
+```
+
+Here are the results of our model comparison: ![](../figures/tutorial_images/negbinom_poisson_AIC.png)
+
+As we can see, the negative binomial model we have constructed fits the data far better than the Poisson model initially constructed. 
+
+
+

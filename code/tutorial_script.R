@@ -96,8 +96,8 @@ AIC(mod_null, poisson_model)
 # This was inspired by https://stats.oarc.ucla.edu/r/dae/negative-binomial-regression/
 summary(negbinom_model <- glm.nb(Bracken_stands~Disturbance_Type, data = invasive))
 
-
-
+# Compare model fit with Poisson model
+AIC(poisson_model, negbinom_model)
 
 
 
