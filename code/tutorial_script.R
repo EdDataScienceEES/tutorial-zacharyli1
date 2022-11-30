@@ -86,6 +86,7 @@ summary(negbinom_model <- glm.nb(Bracken_stands~Disturbance_Type, data = invasiv
 
 
 
+
 zero_inflated_nbiom <- glmmTMB(Percentage_Cover ~ Disturbance_Distance+Disturbance_Type + (1|Disturbance_Number) + (1|Transect_Number), ziformula = ~Disturbance_Distance+Disturbance_Type + (1|Disturbance_Number) + (1|Transect_Number), family = "nbinom2", data = invasive)
 
 
