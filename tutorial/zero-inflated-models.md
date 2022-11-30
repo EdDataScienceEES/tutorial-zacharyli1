@@ -101,7 +101,7 @@ Later, we will incorporate these factors into our model to determine whether roa
 
 {: #distrib}
 
-We have now established our research question as well as the variables we intend to incorporate in our study. Next, we will build on this knowledge by visualizing the data set as a histogram. This helps us gauge a better understanding of the type of distribution our data follows as well as assissting us in the model selection process.
+We have now established our research question as well as the variables we intend to incorporate in our study. Next, we will build on this knowledge by visualizing the data set as a histogram. This helps us gauge a better understanding of the type of distribution our data follows as well as assisting us in the model selection process.
 
 ``` r
 # Create a histogram of initial distribution
@@ -135,6 +135,31 @@ sum(invasive$Bracken_stands == 0)/nrow(invasive) # ~49% of the observations are 
 ```
 
 Despite the large number of zero observations, the data appears to roughly follow a poisson distribution. We will use this information into our first model.
+
+We can also visualize how the number of bracken stands is distributed according to our explanatory variable, road type using a boxplot.
+
+``` r
+# Create boxplot of bracken stand distribution according to road type
+(bracken_boxplot <- ggplot(invasive, aes(Disturbance_Type, Bracken_stands)) + 
+    geom_boxplot(aes(fill = Disturbance_Type)) +
+    theme_bw() +
+    scale_fill_manual(values = c("#EE7600", "#00868B")) + # Adding custom colours
+    scale_colour_manual(values = c("#EE7600", "#00868B")) + # Adding custom colours
+    ylab("Number of Bracken Stands\n") +                             
+    xlab("\nRoad Type")  +
+    theme(axis.text = element_text(size = 12),
+          axis.title = element_text(size = 14, face = "plain"),                     
+          panel.grid = element_blank(), # Removing the background grid lines               
+          plot.margin = unit(c(1,1,1,1), units = , "cm"), # Adding a margin
+          legend.position = "none")) # Removing legend - not needed with only 2 factors
+
+# Save boxplot
+ggsave(filename = "figures/bracken_stand_boxplot.png", bracken_boxplot, device = "png")
+```
+
+The box plot generated should look something like this: ![](../figures/bracken_stand_boxplot.png)
+
+Now that we have a good idea of how our data is distributed as well as our variables of interest, we can proceed to build our first model!
 
 ------------------------------------------------------------------------
 
@@ -209,18 +234,10 @@ library(MASS)
 
 For this tutorial, we will use the **glm.nb** function from MASS to fit our negative binomial model. It follows nearly the identical structure to the **glm** function, except the 'family' term does not need to be specified.
 
-```r
-negbinom_model <- glm.nb(Bracken_stands~Disturbance_Type, data = invasive)
+``` r
+summary(negbinom_model <- glm.nb(Bracken_stands~Disturbance_Type, data = invasive))
 ```
 
+The format of the summary goes as follows. Below the call and deviance residuals aare the estimated regression coefficients for each variable in the model along with the standard error, z-scores, and p-value.
 
-
-
-
-
-
-
-
-
-
-
+According to our model, the variable road type has a statistically significant effect on the number of bracken stands (p \< 0.01). The variable has a coefficient of 0.7656, meaning that the expected log count of bracken stands is 0.7656 higher in

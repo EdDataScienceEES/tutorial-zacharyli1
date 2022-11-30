@@ -44,6 +44,23 @@ unique(invasive$Bracken_stands)
 # Save histogram
 ggsave(filename = "figures/bracken_stand_histogram.png", hist_invasive, device = "png")
 
+# Create boxplot of bracken stand distribution according to road type
+(bracken_boxplot <- ggplot(invasive, aes(Disturbance_Type, Bracken_stands)) + 
+    geom_boxplot(aes(fill = Disturbance_Type)) +
+    theme_bw() +
+    scale_fill_manual(values = c("#EE7600", "#00868B")) +               # Adding custom colours
+    scale_colour_manual(values = c("#EE7600", "#00868B")) +             # Adding custom colours
+    ylab("Number of Bracken Stands\n") +                             
+    xlab("\nRoad Type")  +
+    theme(axis.text = element_text(size = 12),
+          axis.title = element_text(size = 14, face = "plain"),                     
+          panel.grid = element_blank(),                                 # Removing the background grid lines               
+          plot.margin = unit(c(1,1,1,1), units = , "cm"),               # Adding a margin
+          legend.position = "none"))                                    # Removing legend - not needed with only 2 factors
+
+# Save boxplot
+ggsave(filename = "figures/bracken_stand_boxplot.png", bracken_boxplot, device = "png")
+
 # Deduce proportion of zeros in the data 
 sum(invasive$Bracken_stands == 0)/nrow(invasive) # ~49% of the observations are zeros!
 
