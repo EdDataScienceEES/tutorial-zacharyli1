@@ -220,7 +220,10 @@ The '1' included in the null model is R speak for only estimating the intercept.
 AIC(mod_null, poisson_model)
 ```
 
-Here is the output of the model comparison: ![](../figures/tutorial_images/poisson_null_AIC.png)
+Here is the output of the model comparison:
+
+
+![](../figures/tutorial_images/poisson_null_AIC.png)
 
 By comparing AIC values, we can deduce that the poisson model we have constructed fits the data better than a null model, which is encouraging. However, the high dispersion ratio of the poisson model makes it difficult to trust the results. Next, we will explore the negative binomial response model, which does a much better job at fitting overdispersed data!
 
@@ -254,7 +257,10 @@ The **glm.nb** function characterizes the data based on the negative binomial er
 AIC(poisson_model, negbinom_model)
 ```
 
-Here are the results of our model comparison: ![](../figures/tutorial_images/negbinom_poisson_AIC.png)
+Here are the results of our model comparison:
+
+
+![](../figures/tutorial_images/negbinom_poisson_AIC.png)
 
 As we can see, the negative binomial model we have constructed fits the data far better than the Poisson model initially constructed. 
 
