@@ -41,7 +41,7 @@ All the files required to complete this tutorial can be found from [this reposit
 
 -   Zero-inflation test
 
-5. [Zero-inflated Models]
+5.  [Zero-inflated Models](#zero-inflated-models-1)
 
 ------------------------------------------------------------------------
 
@@ -331,27 +331,20 @@ The benefit of using the DHARMa package is that it has its own test for zero-inf
 testZeroInflation(simulationOutput)
 ```
 
-A graph that looks something like this should appear in the plots panel. This displays the expected distribution of zeros in comparison to the distribution of zeros in the bracken data set. 
+A graph that looks something like this should appear in the plots panel. This displays the expected distribution of zeros in comparison to the distribution of zeros in the bracken data set.
 
 ![](../figures/tutorial_images/zero_inflation_panel.png)
 
 Next, we are given the summary outputs in the R console.
 
-[](../figures/tutorial_images/![](../figures/tutorial_images/DHARMa_summary_output.png)
+![](../figures/tutorial_images/DHARMa_summary_output.png)
 
-The first output of importance is the ratioObsSim, which shows the observed versus the simulated zeros. A value of <1 indicates less zeros than expected and a value >1 indicates zero-inflation of the data. In our case the ratioObsSim from the zero-inflation test was 3.6, meaning there were a lot more zeros in our bracken data than expected. 
+The first output of importance is the ratioObsSim, which shows the observed versus the simulated zeros. A value of \<1 indicates less zeros than expected and a value \>1 indicates zero-inflation of the data. In our case the ratioObsSim from the zero-inflation test was 3.6, meaning there were a lot more zeros in our bracken data than expected.
 
-Next, the p-value indicates whether the zeros in our data are signficant (zero-inflation present). In our case, the zero-inflation test reveals that there is zero-inflation in the bracken data (p < 0.01). 
+Next, the p-value indicates whether the zeros in our data are signficant (zero-inflation present). In our case, the zero-inflation test reveals that there is zero-inflation in the bracken data (p \< 0.01).
 
 With the zero-inflation test completed, we have established our rationale for the use of a zero-inflated model. Now, we can build our zero-inflated model and compare it to the previous models we have constructed!
 
-***
+------------------------------------------------------------------------
 
-## Zero-inflated Models
-
-
-
-
-
-
-
+## Zero-inflated Models {#zero-inflated-models-1}
