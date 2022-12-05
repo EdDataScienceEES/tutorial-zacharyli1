@@ -37,7 +37,11 @@ All the files required to complete this tutorial can be found from [this reposit
 -   Model construction
 -   Interpreting model results
 
-4.  [Zero-inflation tests]
+4.  [Zero-inflation Evaluation]
+
+-   Zero-inflation test
+
+5. [Zero-inflated Models]
 
 ------------------------------------------------------------------------
 
@@ -279,7 +283,7 @@ To review, we elected to model our bracken data with a negative binomial respons
 
 ------------------------------------------------------------------------
 
-## Zero-inflation Test
+## Zero-inflation evaluation
 
 Zero-inflation is a unique case of overdispersion, where there are more zeros in the data set than expected in a fitted model. From our initial analysis, we determined that 49% of the observations for number of bracken stands were zeros. It is important to remember that just because a data set contains a lot of zeros does not mean it is necessarily zero-inflated!
 
@@ -293,3 +297,61 @@ Let us begin by installing the necessary libraries.
 library(glmmTMB) # generate zero-inflated mixed models
 library(DHARMa) # allows for zero-inflation testing
 ```
+
+We can proceed by building our test model using the glmm.TMB() function. Then, we will first begin by visualize the plot residuals.
+
+``` r
+mod1 <- glmmTMB(Bracken_stands~Disturbance_Type, family = "poisson", data = invasive) # build model
+simulationOutput <- simulateResiduals(fittedModel = mod1) # generate residuals
+plot(simulationOutput) # visualize residuals
+```
+
+Here is what the output should look something like.
+
+![](../figures/tutorial_images/DHARMa_residuals.png)
+
+For this tutorial, we will focus on the Q-Q plot residuals on the left hand side of the panel. Furthermore, we can make the plot less messy and easier to interpret using the plotQQunif() function.
+
+``` r
+plotQQunif(simulationOutput = simulationOutput, 
+           testDispersion = FALSE,
+           testUniformity = FALSE,
+           testOutliers = FALSE)
+```
+
+Similar to a linear regression, the Q-Q plot residuals graph shows an overall distribution of the residuals, where a "correct" residual distribution is one that roughly follows the 1-1 straight red line. In our particular study, we can see that the residuals are not surprisingly not correctly distributed. Now, we can move to the actual zero-inflation test.
+
+------------------------------------------------------------------------
+
+## Zero-inflation Test
+
+The benefit of using the DHARMa package is that it has its own test for zero-inflation of the data. In essence, the distribution of the expected zeros will be compared with the observed zeros in our bracken data set. Let us run the zero-inflation test and discuss the implications of its results.
+
+``` r
+testZeroInflation(simulationOutput)
+```
+
+A graph that looks something like this should appear in the plots panel. This displays the expected distribution of zeros in comparison to the distribution of zeros in the bracken data set. 
+
+![](../figures/tutorial_images/zero_inflation_panel.png)
+
+Next, we are given the summary outputs in the R console.
+
+[](../figures/tutorial_images/![](../figures/tutorial_images/DHARMa_summary_output.png)
+
+The first output of importance is the ratioObsSim, which shows the observed versus the simulated zeros. A value of <1 indicates less zeros than expected and a value >1 indicates zero-inflation of the data. In our case the ratioObsSim from the zero-inflation test was 3.6, meaning there were a lot more zeros in our bracken data than expected. 
+
+Next, the p-value indicates whether the zeros in our data are signficant (zero-inflation present). In our case, the zero-inflation test reveals that there is zero-inflation in the bracken data (p < 0.01). 
+
+With the zero-inflation test completed, we have established our rationale for the use of a zero-inflated model. Now, we can build our zero-inflated model and compare it to the previous models we have constructed!
+
+***
+
+## Zero-inflated Models
+
+
+
+
+
+
+

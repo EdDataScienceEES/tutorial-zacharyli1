@@ -102,8 +102,18 @@ summary(negbinom_model <- glm.nb(Bracken_stands~Disturbance_Type, data = invasiv
 AIC(poisson_model, negbinom_model)
 
 # Zero-inflation tests----
+mod1 <- glmmTMB(Bracken_stands~Disturbance_Type, family = "poisson", data = invasive) # build model
+simulationOutput <- simulateResiduals(fittedModel = mod1) # generate residuals
+plot(simulationOutput) # visualize residuals
 
+# Generate Q-Q plot
+plotQQunif(simulationOutput = simulationOutput, 
+           testDispersion = FALSE,
+           testUniformity = FALSE,
+           testOutliers = FALSE)
 
+# Test for zero-inflation
+testZeroInflation(simulationOutput)
 
 
 
