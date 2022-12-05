@@ -8,12 +8,14 @@ install.packages("ggplot2")
 install.packages("dplyr")
 install.packages("MASS") 
 install.packages("glmmTMB") 
+install.packages("DHARMa")
 
 # Libraries----
 library(ggplot2) # create aesthetic visuals from data frame
 library(dplyr) # improve data manipulation efficiency
 library(MASS) # generate negative binomial regression models
 library(glmmTMB) # generate zero-inflated mixed models
+library(DHARMa) # allows for zero-inflation testing
 
 # Load Invasive Species Data----
 invasive <- read.csv(file = 'data/invasive.csv')
@@ -99,6 +101,7 @@ summary(negbinom_model <- glm.nb(Bracken_stands~Disturbance_Type, data = invasiv
 # Compare model fit with Poisson model
 AIC(poisson_model, negbinom_model)
 
+# Zero-inflation tests----
 
 
 

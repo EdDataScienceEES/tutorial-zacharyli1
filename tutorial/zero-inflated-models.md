@@ -32,7 +32,12 @@ All the files required to complete this tutorial can be found from [this reposit
 -   Data distribution
 -   Poisson model
 
-3.  [Negative Binomal Response]
+3.  [Negative Binomial Response]
+
+-   Model construction
+-   Interpreting model results
+
+4.  [Zero-inflation tests]
 
 ------------------------------------------------------------------------
 
@@ -222,7 +227,6 @@ AIC(mod_null, poisson_model)
 
 Here is the output of the model comparison:
 
-
 ![](../figures/tutorial_images/poisson_null_AIC.png)
 
 By comparing AIC values, we can deduce that the poisson model we have constructed fits the data better than a null model, which is encouraging. However, the high dispersion ratio of the poisson model makes it difficult to trust the results. Next, we will explore the negative binomial response model, which does a much better job at fitting overdispersed data!
@@ -232,6 +236,10 @@ By comparing AIC values, we can deduce that the poisson model we have constructe
 ## Negative Binomial Response
 
 One way to address our issue of overdispersed data is to use a Negative Binomial Regression. The negative binomial regression also describes non-negative count data similar to the Poisson distribution, except it does not hold the assumption that the mean and the variance are the same. A negative binomial model has been cited on many instances in the literature for modelling data with a considerable number of zeros because it accounts for overdispersion. However, if the number of zeros exceeds the amount expected from a negative binomial distribution, we may have to take another approach.
+
+------------------------------------------------------------------------
+
+## Model construction
 
 Let us build our negative binomial model using the package "MASS." For more information regarding the this package and the negative binomial regression, you can check out [this website](https://stats.oarc.ucla.edu/r/dae/negative-binomial-regression/). First, we have to load the specified library.
 
@@ -249,6 +257,10 @@ Here is what the summary table should look like: ![](../figures/tutorial_images/
 
 The format of the summary goes as follows. Below the call and deviance residuals are the estimated regression coefficients for each variable in the model along with the standard error, z-scores, and p-value.
 
+------------------------------------------------------------------------
+
+## Interpreting model results
+
 According to our model, the variable road type has a statistically significant effect on the number of bracken stands (p \< 0.01). The variable has a coefficient of 0.7656, meaning that the expected log count of bracken stands is 0.7656 higher in footpaths due to the effect of road type.
 
 The **glm.nb** function characterizes the data based on the negative binomial error distribution and also includes an extra term theta, which is the overdispersion parameter. So far, we have recognized that our data was overdispersed, and selected a model to rectify some of the shortcomings of our previous Poisson model. In fact, let us compare the model fit of our two models using AIC.
@@ -259,10 +271,25 @@ AIC(poisson_model, negbinom_model)
 
 Here are the results of our model comparison:
 
-
 ![](../figures/tutorial_images/negbinom_poisson_AIC.png)
 
-As we can see, the negative binomial model we have constructed fits the data far better than the Poisson model initially constructed. 
+As we can see, the negative binomial model we have constructed fits the data far better than the Poisson model initially constructed.
 
+To review, we elected to model our bracken data with a negative binomial response because it effectively characterizes overdispersed count variables. However, it is also important to consider the underlying cause of data overdispersion. In our case, the large number of zeros in the data set could be causing overdispersion due to another underlying process. Therefore, we should consider using a zero-inflated model to represent our data and compare the model fit afterwards.
 
+------------------------------------------------------------------------
 
+## Zero-inflation Test
+
+Zero-inflation is a unique case of overdispersion, where there are more zeros in the data set than expected in a fitted model. From our initial analysis, we determined that 49% of the observations for number of bracken stands were zeros. It is important to remember that just because a data set contains a lot of zeros does not mean it is necessarily zero-inflated!
+
+Today, we will use the DHARMa package developed by Florian Hartig to test for zero-inflation of the data. More information about DHARMa is available on [this website](https://cran.r-project.org/web/packages/DHARMa/vignettes/DHARMa.html#zero-inflation-k-inflation-or-deficits).
+
+In order to build more complex generalized mixed linear models (e.g., zero-inflated models), we will need to install the glmmTMB R package. In essence, it allows the user to produce a much broader range of statistical distributions. More information regarding the glmmTMB package is available on [this website](https://glmmtmb.github.io/glmmTMB/).
+
+Let us begin by installing the necessary libraries.
+
+``` r
+library(glmmTMB) # generate zero-inflated mixed models
+library(DHARMa) # allows for zero-inflation testing
+```
