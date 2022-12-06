@@ -43,6 +43,8 @@ All the files required to complete this tutorial can be found from [this reposit
 
 5.  [Zero-inflated Models](#zero-inflated-models-1)
 
+- Interpreting results
+
 ------------------------------------------------------------------------
 
 # Introduction to Zero-inflated Models
@@ -239,7 +241,9 @@ By comparing AIC values, we can deduce that the poisson model we have constructe
 
 ## Negative Binomial Response
 
-One way to address our issue of overdispersed data is to use a Negative Binomial Regression. The negative binomial regression also describes non-negative count data similar to the Poisson distribution, except it does not hold the assumption that the mean and the variance are the same. A negative binomial model has been cited on many instances in the literature for modelling data with a considerable number of zeros because it accounts for overdispersion. However, if the number of zeros exceeds the amount expected from a negative binomial distribution, we may have to take another approach.
+One way to address our issue of overdispersed data is to use a Negative Binomial Regression. The negative binomial regression also describes non-negative count data similar to the Poisson distribution, except it does not hold the assumption that the mean and the variance are the same. In fact, it assumes that the variance increases quadratically relative to the mean, which means that the count data is more dispersed
+
+A negative binomial model has been cited on many instances in the literature for modelling data with a considerable number of zeros because it accounts for overdispersion. However, if the number of zeros exceeds the amount expected from a negative binomial distribution, we may have to take another approach.
 
 ------------------------------------------------------------------------
 
@@ -267,7 +271,9 @@ The format of the summary goes as follows. Below the call and deviance residuals
 
 According to our model, the variable road type has a statistically significant effect on the number of bracken stands (p \< 0.01). The variable has a coefficient of 0.7656, meaning that the expected log count of bracken stands is 0.7656 higher in footpaths due to the effect of road type.
 
-The **glm.nb** function characterizes the data based on the negative binomial error distribution and also includes an extra term theta, which is the overdispersion parameter. So far, we have recognized that our data was overdispersed, and selected a model to rectify some of the shortcomings of our previous Poisson model. In fact, let us compare the model fit of our two models using AIC.
+The **glm.nb** function characterizes the data based on the negative binomial error distribution and also includes an extra term theta, which is the overdispersion parameter. The larger the value of the overdispersion parameter is, the less variance there is and hence a poisson model may represent the data more effectively.
+
+So far, we have recognized that our data was overdispersed, and selected a model to rectify some of the shortcomings of our previous Poisson model. In fact, let us compare the model fit of our two models using AIC.
 
 ``` r
 AIC(poisson_model, negbinom_model)
@@ -348,3 +354,63 @@ With the zero-inflation test completed, we have established our rationale for th
 ------------------------------------------------------------------------
 
 ## Zero-inflated Models {#zero-inflated-models-1}
+
+We will build our zero-inflated model by using the glmmTMB R package. The notation differs from a glm or lme4 syntax, as it contains more parameters that need to be specified. Here is the model we will use for our study:
+
+``` r
+# Build zero-inflated model using glmmTMB()
+zero_inflated_nbiom <- glmmTMB(Bracken_stands ~ Disturbance_Type, ziformula = ~Disturbance_Type, family = "nbinom2", data = invasive)
+```
+
+The syntax of a zero-inflated model starts off identical to that of an lme4 by first stating the formula we want to test. In this case, we are assessing the effect of road type on the number of bracken stands. Next, the term "ziformula" (can also be written as just "zi") is the zero-inflation term. If there is no zero-inflation of the data, this term would be written as \~0. However, in our study, we are assuming that the absences (zeros) will vary based on road type, so we write it as ziformula = \~Disturbance_Type. Furthermore, we told the model to use a negative binomial model over a poisson model due to overdispersion of the data using family = "nbinom2." Finally, we specified the data set of interest using data = invasive.
+
+Before we continue onto our summary and analysis, let us compare the fit of our new model with the ones previously constructed. We can do this once again by using AIC.
+
+``` r
+AIC(poisson_model, negbinom_model, zero_inflated_nbiom)
+```
+
+Here are the results of our comparison.
+
+![](../figures/tutorial_images/zero_inflated_AIC1.png)
+
+As we can see, the zero-inflated negative binomial model we have constructed fits the data much better than the poisson model and the negative binomial model! To further emphasize that we have chosen our model correctly, lets build a zero-inflated poisson model and see how it fairs against the zero-inflated negative binomial model we constructed. This can be done like so:
+
+``` r
+# Build zero-inflated poisson model
+zero_inflated_poisson <- glmmTMB(Bracken_stands ~ Disturbance_Type, ziformula = ~Disturbance_Type, family = "poisson", data = invasive)
+
+# Compare model fit using AIC
+AIC(poisson_model, negbinom_model, zero_inflated_poisson, zero_inflated_nbiom)
+```
+
+Here are the results of the summary output:
+
+![](../figures/tutorial_images/zero_inflated_AIC2.png)
+
+As we can see, the negative binomial model (no zero-inflation) characterized the data more effectively than the zero-inflated poisson model. From our AIC test of model fit, we can be confident that we have constructed the best model to represent our bracken data. 
+
+***
+
+## Interpreting results
+
+Now that we have gone through all the checks, we can see the results of our analysis! We can do this by using the code:
+
+```r
+summary(zero_inflated_nbiom)
+```
+
+Here is what the summary table should look something like.
+
+![](../figures/tutorial_images/zero_inflated_summary_table.png)
+
+
+
+
+
+
+
+
+
+
+

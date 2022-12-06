@@ -115,9 +115,24 @@ plotQQunif(simulationOutput = simulationOutput,
 # Test for zero-inflation
 testZeroInflation(simulationOutput)
 
+# Zero-inflated models----
+# Build zero-inflated negative binomial model using glmmTMB()
+zero_inflated_nbiom <- glmmTMB(Bracken_stands ~ Disturbance_Type, ziformula = ~Disturbance_Type, family = "nbinom2", data = invasive)
+
+# Compare model fit with previous models constructed
+AIC(poisson_model, negbinom_model, zero_inflated_nbiom)
+
+# Build zero-inflated poisson model
+zero_inflated_poisson <- glmmTMB(Bracken_stands ~ Disturbance_Type, ziformula = ~Disturbance_Type, family = "poisson", data = invasive)
+
+# Compare model fit using AIC
+AIC(poisson_model, negbinom_model, zero_inflated_poisson, zero_inflated_nbiom)
+
+# Obtain model summary
+summary(zero_inflated_nbiom)
 
 
-zero_inflated_nbiom <- glmmTMB(Percentage_Cover ~ Disturbance_Distance+Disturbance_Type + (1|Disturbance_Number) + (1|Transect_Number), ziformula = ~Disturbance_Distance+Disturbance_Type + (1|Disturbance_Number) + (1|Transect_Number), family = "nbinom2", data = invasive)
+
 
 
 
