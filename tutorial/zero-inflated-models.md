@@ -43,7 +43,13 @@ All the files required to complete this tutorial can be found from [this reposit
 
 5.  [Zero-inflated Models](#zero-inflated-models-1)
 
-- Interpreting results
+-   Interpreting summary table
+-   Adding random effects
+-   Analyzing results
+
+6.  [Conclusion]
+
+-   Further implications
 
 ------------------------------------------------------------------------
 
@@ -355,6 +361,10 @@ With the zero-inflation test completed, we have established our rationale for th
 
 ## Zero-inflated Models {#zero-inflated-models-1}
 
+Before we construct our zero-inflated model, we should consider what the excess number of zeros means in the ecological context of our study. The sampling zeros in the data set can be modelled with a Poisson or negative binomial response, which is a result that could have occurred due to chance. More specifically, the sampling zeros in our data set are attributed to the fluctuations in the number of bracken stands in different road types.
+
+A structural zero is one that occurs due to the characteristic of the site. In our study, certain quadrats sampled may simply be situated in an environment that does not allow for the proliferation of bracken. As a result, the structural zeros in the data set are a product of the site characteristics (not road type) that will always result in the recorded observation being zero. In essence, a zero-inflated model accounts for the differences in the generation pattern of zeros that a standard distribution could not.
+
 We will build our zero-inflated model by using the glmmTMB R package. The notation differs from a glm or lme4 syntax, as it contains more parameters that need to be specified. Here is the model we will use for our study:
 
 ``` r
@@ -362,7 +372,7 @@ We will build our zero-inflated model by using the glmmTMB R package. The notati
 zero_inflated_nbiom <- glmmTMB(Bracken_stands ~ Disturbance_Type, ziformula = ~Disturbance_Type, family = "nbinom2", data = invasive)
 ```
 
-The syntax of a zero-inflated model starts off identical to that of an lme4 by first stating the formula we want to test. In this case, we are assessing the effect of road type on the number of bracken stands. Next, the term "ziformula" (can also be written as just "zi") is the zero-inflation term. If there is no zero-inflation of the data, this term would be written as \~0. However, in our study, we are assuming that the absences (zeros) will vary based on road type, so we write it as ziformula = \~Disturbance_Type. Furthermore, we told the model to use a negative binomial model over a poisson model due to overdispersion of the data using family = "nbinom2." Finally, we specified the data set of interest using data = invasive.
+The syntax of a zero-inflated model starts off identical to that of an lme4 by first stating the formula we want to test. In this case, we are assessing the effect of road type on the number of bracken stands. Next, the term "ziformula" (can also be written as just "zi") is the zero-inflation term. If there is no zero-inflation of the data, this term would be written as \~0. However, in our study, we are assuming that the absences (zeros) will vary based on road type, so we write it as ziformula = \~Disturbance_Type. Furthermore, we told the model to use a negative binomial model over a poisson model due to overdispersion of the data using family = "nbinom2." The family "nbiom2" specifes that the variance increases quadratically with the mean, rather than linearly ("nbinom1"). Finally, we specified the data set of interest using data = invasive.
 
 Before we continue onto our summary and analysis, let us compare the fit of our new model with the ones previously constructed. We can do this once again by using AIC.
 
@@ -388,15 +398,15 @@ Here are the results of the summary output:
 
 ![](../figures/tutorial_images/zero_inflated_AIC2.png)
 
-As we can see, the negative binomial model (no zero-inflation) characterized the data more effectively than the zero-inflated poisson model. From our AIC test of model fit, we can be confident that we have constructed the best model to represent our bracken data. 
+As we can see, the negative binomial model (no zero-inflation) characterized the data more effectively than the zero-inflated poisson model. This indicates that even despite accounting for the large number of zeros, the data set contains more variability than that predicted from a Poisson distribution. In essence, adding more complexity to our basic negative binomial model improved the estimations considerably. From our AIC test of model fit, we can be confident that we have constructed the best model to represent our bracken data.
 
-***
+------------------------------------------------------------------------
 
-## Interpreting results
+## Interpreting summary table
 
 Now that we have gone through all the checks, we can see the results of our analysis! We can do this by using the code:
 
-```r
+``` r
 summary(zero_inflated_nbiom)
 ```
 
@@ -404,13 +414,113 @@ Here is what the summary table should look something like.
 
 ![](../figures/tutorial_images/zero_inflated_summary_table.png)
 
+The conditional model represents the response in the absence of zero-inflation. In standard GLM or GLMM models, only the "conditional model" is fit to the data under the assumption that zero-inflation is set at the default value. The zero-inflation model represents the probability of generating a structural zero not accounted for by the conditional model.
 
+WAIT! Before we continue, we have to look futher in depth in our data collection process to make sure our model accurately represents the distribution of bracken in Oban.
 
+------------------------------------------------------------------------
 
+## Adding random effects
 
+In this study, observations were taken from two road types: (1) roads and (2) footpaths. Within each road, a total of 6 transects were laid out perpendicular to the road with an additional 5 quadrats placed within each transect. Here is a visual representation of the sampling strategy.
 
+![](../figures/tutorial_images/sampling_scheme.png)
 
+After visualizing the sampling scheme, we can see that not all of our observations are independent! What does this mean? This implies that bracken observations within the same road and same transect are more likely to be similar to each other. In essence, the measurement of one of our observations provides insight into another observation, meaning that our observations are not random. This is called pseudoreplication!
 
+This is problematic because the current state of our model does not account for our sampling process. By including the road number and transect number as random effects, we are essentially telling the model that the levels existing in the data set are related. Moreover, we do not care about how the number of bracken stands are distributed between the same road type or how they vary between transects.
 
+We can build this complexity into our model by adding the road number (Disturbance_Number) and transect number (Transect_Number) as random effects to the conditional formula of our model. Our new model will look something like this:
 
+``` r
+zero_inflated_nbiom2 <- glmmTMB(Bracken_stands ~ Disturbance_Type + (1|Disturbance_Number) + (1|Transect_Number), ziformula = ~Disturbance_Type, family = "nbinom2", data = invasive)
+```
 
+We can compare our new model (random effects included) with our previous model with only fixed effects using AIC.
+
+``` r
+AIC(zero_inflated_nbiom, zero_inflated_nbiom2)
+```
+
+Here are the results:
+
+![](../figures/tutorial_images/zero_inflated_AIC3.png)
+
+As we can see, including the two random effects improved the model fit of the data considerably. We can also test whether the inclusion the random effects are needed using a likelihood ratio test. The likelihood ratio test compares the two models with each other and determine whether including the random effects actually improve the model fit. This can be done like so:
+
+``` r
+anova(zero_inflated_nbiom, zero_inflated_nbiom2)
+```
+
+Here is what the summary table should look like:
+
+![](../figures/tutorial_images/liklihood_ratio_test.png)
+
+A handy component of the likelihood ratio test is that it also shows the AIC. The p-value represents the significance of the random effects of the model, given that the fixed effects were set as constant between the two models.
+
+Now, what if we considered these two random effects as having an effect on the generation process of structural zeros? We can easily test this by including the two random effects on the "ziforumla" portion of the formula. Our new model will look like this:
+
+``` r
+zero_inflated_nbiom3 <- glmmTMB(Bracken_stands ~ Disturbance_Type + (1|Disturbance_Number) + (1|Transect_Number), ziformula = ~Disturbance_Type + (1|Disturbance_Number) + (1|Transect_Number), family = "nbinom2", data = invasive)
+```
+
+We can check the model fit of our new model once again by using AIC.
+
+``` r
+AIC(zero_inflated_nbiom, zero_inflated_nbiom2, zero_inflated_nbiom3)
+```
+
+Here are the results of the comparison:
+
+![](../figures/tutorial_images/zero_inflated_AIC4.png)
+
+From this test, we can see that adding further complexity to the model actually worsened the model fit. Similarly, it can be implied that the random effects we included had little effect on the generation process of structural zeros. We deduced that the zero-inflated negative binomial model with random effects on the conditional side of the formula was the best fit.
+
+Now that we have thoroughly considered the entire context of the study, we can confidently interpret our model results!
+
+------------------------------------------------------------------------
+
+## Analyzing results
+
+Similar to the first zero-inflated model we constructed, we can use the summary() function to extrapolate our findings.
+
+``` r
+summary(zero_inflated_nbiom2)
+```
+
+Here is what the summary table should look like:
+
+![](../figures/tutorial_images/final_model_summary1.png) ![](../figures/tutorial_images/final_model_summary2.png)
+
+First, the random effects are shown. The variance and standard deviations are displayed, as well as the sample size and dispersion parameter.
+
+Next, the conditional model is shown. The p-value is important to note, as it can be interpreted as the probability of the results given that the null hypothesis is true. In our case, we can deduce that the road type has a significant effect on the number of bracken stands. More importantly, the coefficient estimates provide us with further insight into the ecological implications of our findings.
+
+We can estimate the effect size of road type by comparing the baseline (intercept) with the mean. In our case, the baseline number of bracken stands in both road types would be 0.9206 bracken stands. Because the data is log-transformed by using a negative binomial response, we have to undo it by getting the exponential value of the log-transformation. In this case, we estimate that the baseline number of bracken stands is 2.51. Now, we can undo the log-transformation of the mean and determine that the road type influences the number of bracken stands by 1.94 bracken stands. More specifically, there are 1.94 more bracken stands in roads than in footpaths.
+
+Finally, we can move on to the zero-inflation model part of the summary table. Sites sampled that do not characteristically favor bracken growth have a baseline of 1.36 bracken stands. The influence of road type affects this number by another 1.26 bracken stands, as there are more bracken stands in roads than in footpaths.
+
+------------------------------------------------------------------------
+
+## Conclusion
+
+In this tutorial, you learned:
+
+-   Why zero-inflated models are used in ecological modelling
+-   Why the model selection process is important before choosing a zero-inflated model
+-   Why is overdispersion important in choosing an appropriate model
+-   How to compare model fit using AIC and likelihood ratio tests
+-   How to test for zero-inflation of ecological data
+-   How to construct a zero-inflated model
+-   How to interpret the results of a zero-inflated model
+-   How to present your results in a scientific report
+
+------------------------------------------------------------------------
+
+## Further implications
+
+Today, we explored the use of zero-inflated models, specifically Poisson and negative binomial to model count data with an excess of zeros. However, non-count data can also be modelled using a zero-inflated binomial model, which is more complex and outside the scope of this tutorial. Furthermore, graphing zero-inflated models was not discussed in this tutorial, as it is more advanced and outside the bubble of expertise. However, here are some resources to explore if you are further interested in zero-inflated models!
+
+-   More information on zero-inflated negative binomial regression available [here](https://stats.oarc.ucla.edu/r/dae/zinb/)
+
+-   Modelling zero-inflated data available [here](https://fukamilab.github.io/BIO202/04-C-zero-data.html)

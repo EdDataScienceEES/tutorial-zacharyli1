@@ -131,7 +131,31 @@ AIC(poisson_model, negbinom_model, zero_inflated_poisson, zero_inflated_nbiom)
 # Obtain model summary
 summary(zero_inflated_nbiom)
 
+# Build another zero-inflated negative binomial model
+# Add two random effects, disturbance number and transect number
+zero_inflated_nbiom2 <- glmmTMB(Bracken_stands ~ Disturbance_Type + (1|Disturbance_Number) + (1|Transect_Number), ziformula = ~Disturbance_Type, family = "nbinom2", data = invasive)
 
+# Compare model fit (AIC) with no random effect zero-inflated negative binomial model
+AIC(zero_inflated_nbiom, zero_inflated_nbiom2)
+
+# Conduct liklihood ratio test to test if random effects are needed
+anova(zero_inflated_nbiom, zero_inflated_nbiom2)
+
+# Build third zero-inflated model with random effects on zero-generation process
+zero_inflated_nbiom3 <- glmmTMB(Bracken_stands ~ Disturbance_Type + (1|Disturbance_Number) + (1|Transect_Number), ziformula = ~Disturbance_Type + (1|Disturbance_Number) + (1|Transect_Number), family = "nbinom2", data = invasive)
+
+# Test model fit of the three zero-inflated models
+AIC(zero_inflated_nbiom, zero_inflated_nbiom2, zero_inflated_nbiom3)
+
+
+# Generate model summary
+summary(zero_inflated_nbiom2)
+
+exp(0.9206)
+exp(1.19)
+exp(0.3071)
+exp(0.2292)
+exp(0.6605 )
 
 
 
