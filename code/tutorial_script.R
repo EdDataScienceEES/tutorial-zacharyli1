@@ -147,15 +147,10 @@ zero_inflated_nbiom3 <- glmmTMB(Bracken_stands ~ Disturbance_Type + (1|Disturban
 # Test model fit of the three zero-inflated models
 AIC(zero_inflated_nbiom, zero_inflated_nbiom2, zero_inflated_nbiom3)
 
-
 # Generate model summary
 summary(zero_inflated_nbiom2)
 
-exp(0.9206)
-exp(1.19)
-exp(0.3071)
-exp(0.2292)
-exp(0.6605 )
+
 
 
 
