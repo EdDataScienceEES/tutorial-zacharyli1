@@ -1,8 +1,8 @@
 ---
 layout: tutorial
-title: Zero-inflated models
-subtitle:
-date:
+title: Zero-inflated Models Using DHARMa and glmmTMB
+subtitle: Assessing ecological count data with an excess of zeros
+date: 2022-12-07
 author: Zachary Li
 tags: modelling
 ---
@@ -26,7 +26,8 @@ All the files required to complete this tutorial can be found from [this reposit
 
 # Tutorial Structure:
 
-1.  [Introduction to Zero-inflated Models] (#part1)
+1.  [Introduction to Zero-inflated Models](#intro)
+
 2.  [Model Trial and Error] (#part2)
 
 -   Data distribution
@@ -55,7 +56,7 @@ All the files required to complete this tutorial can be found from [this reposit
 
 # Introduction to Zero-inflated Models
 
-{: #part1}
+{: #intro}
 
 Many data sets in ecology can have a large proportion of zero values, especially when quantifying count data such as abundance or binary presence/absence data. There are two types of zeros in statistics, known as a 'true zero' or a 'false zero.' These are defined as:
 
