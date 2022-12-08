@@ -577,4 +577,4 @@ rdrr.io. (n.d.). glmmTMB: Fit Models with TMB in glmmTMB: Generalized Linear Mix
 
 ------------------------------------------------------------------------
 
-#### I would appreciate any feedback or suggestions you have on the tutorial! If you have any question or issues, please contact me at [zacharyli@gmail.com]
+#### I would appreciate any feedback or suggestions you have on the tutorial! If you have any question or issues, please contact me at zacharyli@gmail.com
