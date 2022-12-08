@@ -79,7 +79,7 @@ Let us begin our journey by exploring a data set containing information about an
 
 <center><img src="report_figures/tutorial_images/bracken_picture.png" title="bracken_picture" alt="Img"/></center>
 
-Source: https://www.gardenia.net/plant/pteridium-aquilinum
+Source: <https://www.gardenia.net/plant/pteridium-aquilinum>
 
 Start by opening R Studio and set the working directory to the downloaded folder. Next, load the first package used for the initial visualization of our data This is done by:
 
@@ -142,10 +142,9 @@ We have now established our research question as well as the variables we intend
           axis.title = element_text(size = 14, face = "plain")))
 ```
 
-In the "Plots" tab in RStudio, you should see a histogram that looks like this: 
+In the "Plots" tab in RStudio, you should see a histogram that looks like this:
 
 <center><img src="report_figures/tutorial_outputs/bracken_stand_histogram.png" title="bracken_stand_histogram" alt="Img"/></center>
-
 
 Now that we have generated our histogram, we can save it to use in a report later on to provide the reader insight into our data set.
 
@@ -186,7 +185,7 @@ We can also visualize how the number of bracken stands is distributed according 
 ggsave(filename = "figures/bracken_stand_boxplot.png", bracken_boxplot, device = "png")
 ```
 
-The box plot generated should look something like this: 
+The box plot generated should look something like this:
 
 <center><img src="report_figures/tutorial_outputs/bracken_stand_boxplot.png" title="bracken_stand_boxplot" alt="Img"/></center>
 
@@ -287,7 +286,7 @@ For this tutorial, we will use the **glm.nb** function from MASS to fit our nega
 summary(negbinom_model <- glm.nb(Bracken_stands~Disturbance_Type, data = invasive))
 ```
 
-Here is what the summary table should look like: 
+Here is what the summary table should look like:
 
 <center><img src="report_figures/tutorial_outputs/negbinom_summary.png" title="negbinom_summary.png" alt="Img"/></center>
 
@@ -348,7 +347,6 @@ Here is what the output should look something like.
 
 <center><img src="report_figures/tutorial_outputs/DHARMa_residuals.png" title="DHARMa_residuals" alt="Img"/></center>
 
-
 For this tutorial, we will focus on the Q-Q plot residuals on the left hand side of the panel. Furthermore, we can make the plot less messy and easier to interpret using the plotQQunif() function.
 
 ``` r
@@ -376,14 +374,13 @@ A graph that looks something like this should appear in the plots panel. This di
 
 <center><img src="report_figures/tutorial_outputs/zero_inflation_panel.png" title="zero_inflation_panel" alt="Img"/></center>
 
-
 Next, we are given the summary outputs in the R console.
 
 <center><img src="report_figures/tutorial_outputs/DHARMa_summary_output.png" title="DHARMa_summary_output" alt="Img"/></center>
 
 The first output of importance is the ratioObsSim, which shows the observed versus the simulated zeros. A value of \<1 indicates less zeros than expected and a value \>1 indicates zero-inflation of the data. In our case the ratioObsSim from the zero-inflation test was 3.6, meaning there were a lot more zeros in our bracken data than expected.
 
-Next, the p-value indicates whether the zeros in our data are signficant (zero-inflation present). In our case, the zero-inflation test reveals that there is zero-inflation in the bracken data (p < 0.01).
+Next, the p-value indicates whether the zeros in our data are signficant (zero-inflation present). In our case, the zero-inflation test reveals that there is zero-inflation in the bracken data (p \< 0.01).
 
 With the zero-inflation test completed, we have established our rationale for the use of a zero-inflated model. Now, we can build our zero-inflated model and compare it to the previous models we have constructed!
 
@@ -532,7 +529,6 @@ Here is what the summary table should look like:
 
 <center><img src="report_figures/tutorial_outputs/final_model_summary2.png" title="final_model_summary2" alt="Img"/></center>
 
-
 First, the random effects are shown. The variance and standard deviations are displayed, as well as the sample size and dispersion parameter.
 
 Next, the conditional model is shown. The p-value is important to note, as it can be interpreted as the probability of the results given that the null hypothesis is true. In our case, we can deduce that the road type has a significant effect on the number of bracken stands. More importantly, the coefficient estimates provide us with further insight into the ecological implications of our findings.
@@ -551,7 +547,7 @@ Well done for completing the tutorial! Statistics can be quite confusing and int
 
 <center><img src="report_figures/tutorial_images/well_done.png" title="well_done" alt="Img"/></center>
 
-Source: https://www.englishstamp.com/docs/stock/stamps/aseries/a053.jpg
+Source: <https://www.englishstamp.com/docs/stock/stamps/aseries/a053.jpg>
 
 In this tutorial, you learned:
 
