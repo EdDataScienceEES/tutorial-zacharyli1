@@ -12,4 +12,4 @@ This repository contains all the files, code, and data necessary to complete the
 -   **"instructions"** folder contains the instructions for the development of this tutorial for the EES Data Science 2022 course
 -   **"tutorial"** folder contains the tutorial content and necessary information for a third party to complete this tutorial.
 
-Here is a link to view full tutorial [here]()
+Here is a link to view full tutorial [here](https://eddatascienceees.github.io/tutorial-zacharyli1/)
