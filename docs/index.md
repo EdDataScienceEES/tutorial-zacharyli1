@@ -67,6 +67,8 @@ Data sets are deemed 'zero inflated' when the number of zero values is so large 
 
 ![Figure 1. Example of a histogram showing a zero-inflated data set. Zero-inflated data sets show a characteristic large frequency of zeros in contrast to the rest of the distribution. Source: <https://stats.idre.ucla.edu/wp-content/uploads/2016/02/fishhist.gif>](../figures/tutorial_outputs/zero_inflated_example.png)
 
+<center><img src="report_figures/tutorial_outputs/zero_inflated_example.png" title="Zero inflated data example" alt="Img"/></center>
+
 ------------------------------------------------------------------------
 
 # Model Trial and Error
