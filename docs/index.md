@@ -26,29 +26,29 @@ All the files required to complete this tutorial can be found from [this reposit
 
 # Tutorial Structure:
 
-1.  [Introduction to Zero-inflated Models](#intro)
+[1. Introduction to Zero-inflated Models](#intro)
 
-2.  [Model Trial and Error](#models)
+[2. Model Trial and Error](#models)
 
 -   [Data distribution](#data)
 -   [Poisson model](#poisson)
 
-3.  [Negative Binomial Response](#negbin)
+[3. Negative Binomial Response](#negbin)
 
 -   [Model construction](#construction)
 -   [Interpreting model results](#results)
 
-4.  [Zero-inflation Evaluation](#evaluation)
+[4. Zero-inflation Evaluation](#evaluation)
 
 -   [Zero-inflation test](#test)
 
-5.  [Zero-inflated Models](#zeromodels)
+[5. Zero-inflated Models](#zeromodels)
 
 -   [Interpreting summary table](#summary)
 -   [Adding random effects](#random)
 -   [Analyzing results](#analyze)
 
-6.  [Conclusion](#conclude)
+[6. Conclusion](#conclude)
 
 -   [Further implications](#futher)
 -   [References](#references)
@@ -66,7 +66,7 @@ Many data sets in ecology can have a large proportion of zero values, especially
 
 Data sets are deemed 'zero inflated' when the number of zero values is so large that standard distributions (e.g., poisson, normal) do not accurately represent the data (Figure 1). Moreover, transforming the data (e.g., log, exponential) is insufficient to rectify the data in a way that would justify the use of a standard distribution. If you were to proceed to characterize the data using a standard distribution, there will be inherent bias introduced to your model. Hence, a different approach is needed to model the data.
 
-![Figure 1. Example of a histogram showing a zero-inflated data set. Zero-inflated data sets show a characteristic large frequency of zeros in contrast to the rest of the distribution. Source: <https://stats.idre.ucla.edu/wp-content/uploads/2016/02/fishhist.gif>](../figures/tutorial_outputs/zero_inflated_example.gif)
+![Figure 1. Example of a histogram showing a zero-inflated data set. Zero-inflated data sets show a characteristic large frequency of zeros in contrast to the rest of the distribution. Source: <https://stats.idre.ucla.edu/wp-content/uploads/2016/02/fishhist.gif>](figures/tutorial_outputs/zero_inflated_example.gif)
 
 ------------------------------------------------------------------------
 
@@ -577,4 +577,4 @@ rdrr.io. (n.d.). glmmTMB: Fit Models with TMB in glmmTMB: Generalized Linear Mix
 
 ------------------------------------------------------------------------
 
-#### I would appreciate any feedback or suggestions you have on the tutorial! If you have any question or issues, please contact me at zacharyli@gmail.com
+#### I would appreciate any feedback or suggestions you have on the tutorial! If you have any question or issues, please contact me at [zacharyli\@gmail.com](mailto:zacharyli@gmail.com){.email}
