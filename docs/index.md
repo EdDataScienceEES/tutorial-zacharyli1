@@ -1,5 +1,4 @@
 ---
-layout: tutorial
 title: Zero-inflated Models Using DHARMa and glmmTMB
 subtitle: Assessing ecological count data with an excess of zeros
 date: 2022-12-07
