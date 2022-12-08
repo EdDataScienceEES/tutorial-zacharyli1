@@ -65,9 +65,9 @@ Many data sets in ecology can have a large proportion of zero values, especially
 
 Data sets are deemed 'zero inflated' when the number of zero values is so large that standard distributions (e.g., poisson, normal) do not accurately represent the data (Figure 1). Moreover, transforming the data (e.g., log, exponential) is insufficient to rectify the data in a way that would justify the use of a standard distribution. If you were to proceed to characterize the data using a standard distribution, there will be inherent bias introduced to your model. Hence, a different approach is needed to model the data.
 
-![Figure 1. Example of a histogram showing a zero-inflated data set. Zero-inflated data sets show a characteristic large frequency of zeros in contrast to the rest of the distribution. Source: <https://stats.idre.ucla.edu/wp-content/uploads/2016/02/fishhist.gif>](../docs/report_figures/tutorial_outputs/zero_inflated_example.png)
-
 <center><img src="report_figures/tutorial_outputs/zero_inflated_example.png" title="Zero inflated data example" alt="Img"/></center>
+
+Figure 1. Example of a histogram showing a zero-inflated data set. Zero-inflated data sets show a characteristic large frequency of zeros in contrast to the rest of the distribution. Source: <https://stats.idre.ucla.edu/wp-content/uploads/2016/02/fishhist.gif>
 
 ------------------------------------------------------------------------
 
@@ -77,7 +77,9 @@ Data sets are deemed 'zero inflated' when the number of zero values is so large 
 
 Let us begin our journey by exploring a data set containing information about an invasive species in Scotland, bracken!
 
-![Source: <https://www.gardenia.net/storage/app/public/uploads/images/detail/jc64YvL2l8KTsMRtxf6dWfNclUr4rZswhGrWzAe9.webp>](../figures/tutorial_images/bracken_picture.png)
+<center><img src="report_figures/tutorial_images/bracken_picture.png" title="bracken_picture" alt="Img"/></center>
+
+Source: https://www.gardenia.net/plant/pteridium-aquilinum
 
 Start by opening R Studio and set the working directory to the downloaded folder. Next, load the first package used for the initial visualization of our data This is done by:
 
@@ -140,7 +142,10 @@ We have now established our research question as well as the variables we intend
           axis.title = element_text(size = 14, face = "plain")))
 ```
 
-In the "Plots" tab in RStudio, you should see a histogram that looks like this: ![](../figures/tutorial_outputs/bracken_stand_histogram.png)
+In the "Plots" tab in RStudio, you should see a histogram that looks like this: 
+
+<center><img src="report_figures/tutorial_outputs/bracken_stand_histogram.png" title="bracken_stand_histogram" alt="Img"/></center>
+
 
 Now that we have generated our histogram, we can save it to use in a report later on to provide the reader insight into our data set.
 
@@ -181,7 +186,9 @@ We can also visualize how the number of bracken stands is distributed according 
 ggsave(filename = "figures/bracken_stand_boxplot.png", bracken_boxplot, device = "png")
 ```
 
-The box plot generated should look something like this: ![](../figures/tutorial_outputs/bracken_stand_boxplot.png)
+The box plot generated should look something like this: 
+
+<center><img src="report_figures/tutorial_outputs/bracken_stand_boxplot.png" title="bracken_stand_boxplot" alt="Img"/></center>
 
 From this initial box plot, we can see that the data distributions within groups does not appear to be normal or exhibit identical variances. This is quite a common feature in ecological data! This will have implications as we build on model complexity, but for now it is good to keep this in mind.
 
@@ -210,7 +217,7 @@ We can extract the summary of the model by running this line of code.
 
 The summary output should look something like this.
 
-![](../figures/tutorial_outputs/poisson_summary_table.png)
+<center><img src="report_figures/tutorial_outputs/poisson_summary_table.png" title="poisson_summary_table" alt="Img"/></center>
 
 From our poisson model, we can deduce that the road type has a significant effect on the number of bracken stands. So, does that the modelling process is done? No, not quite! There are several issues with this first model that we have constructed.
 
@@ -248,7 +255,7 @@ AIC(mod_null, poisson_model)
 
 Here is the output of the model comparison:
 
-![](../figures/tutorial_outputs/poisson_null_AIC.png)
+<center><img src="report_figures/tutorial_outputs/poisson_null_AIC.png" title="poisson_null_AIC" alt="Img"/></center>
 
 By comparing AIC values, we can deduce that the poisson model we have constructed fits the data better than a null model, which is encouraging. However, the high dispersion ratio of the poisson model makes it difficult to trust the results. Next, we will explore the negative binomial response model, which does a much better job at fitting overdispersed data!
 
@@ -280,7 +287,9 @@ For this tutorial, we will use the **glm.nb** function from MASS to fit our nega
 summary(negbinom_model <- glm.nb(Bracken_stands~Disturbance_Type, data = invasive))
 ```
 
-Here is what the summary table should look like: ![](../figures/tutorial_outputs/negbinom_summary.png)
+Here is what the summary table should look like: 
+
+<center><img src="report_figures/tutorial_outputs/negbinom_summary.png" title="negbinom_summary.png" alt="Img"/></center>
 
 The format of the summary goes as follows. Below the call and deviance residuals are the estimated regression coefficients for each variable in the model along with the standard error, z-scores, and p-value.
 
@@ -302,7 +311,7 @@ AIC(poisson_model, negbinom_model)
 
 Here are the results of our model comparison:
 
-![](../figures/tutorial_outputs/negbinom_poisson_AIC.png)
+<center><img src="report_figures/tutorial_outputs/negbinom_poisson_AIC.png" title="negbinom_poisson_AIC" alt="Img"/></center>
 
 As we can see, the negative binomial model we have constructed fits the data far better than the Poisson model initially constructed.
 
@@ -337,7 +346,8 @@ plot(simulationOutput) # visualize residuals
 
 Here is what the output should look something like.
 
-![](../figures/tutorial_outputs/DHARMa_residuals.png)
+<center><img src="report_figures/tutorial_outputs/DHARMa_residuals.png" title="DHARMa_residuals" alt="Img"/></center>
+
 
 For this tutorial, we will focus on the Q-Q plot residuals on the left hand side of the panel. Furthermore, we can make the plot less messy and easier to interpret using the plotQQunif() function.
 
@@ -364,15 +374,16 @@ testZeroInflation(simulationOutput)
 
 A graph that looks something like this should appear in the plots panel. This displays the expected distribution of zeros in comparison to the distribution of zeros in the bracken data set.
 
-![](../figures/tutorial_outputs/zero_inflation_panel.png)
+<center><img src="report_figures/tutorial_outputs/zero_inflation_panel.png" title="zero_inflation_panel" alt="Img"/></center>
+
 
 Next, we are given the summary outputs in the R console.
 
-![](../figures/tutorial_outputs/DHARMa_summary_output.png)
+<center><img src="report_figures/tutorial_outputs/DHARMa_summary_output.png" title="DHARMa_summary_output" alt="Img"/></center>
 
 The first output of importance is the ratioObsSim, which shows the observed versus the simulated zeros. A value of \<1 indicates less zeros than expected and a value \>1 indicates zero-inflation of the data. In our case the ratioObsSim from the zero-inflation test was 3.6, meaning there were a lot more zeros in our bracken data than expected.
 
-Next, the p-value indicates whether the zeros in our data are signficant (zero-inflation present). In our case, the zero-inflation test reveals that there is zero-inflation in the bracken data (p \< 0.01).
+Next, the p-value indicates whether the zeros in our data are signficant (zero-inflation present). In our case, the zero-inflation test reveals that there is zero-inflation in the bracken data (p < 0.01).
 
 With the zero-inflation test completed, we have established our rationale for the use of a zero-inflated model. Now, we can build our zero-inflated model and compare it to the previous models we have constructed!
 
@@ -403,7 +414,7 @@ AIC(poisson_model, negbinom_model, zero_inflated_nbiom)
 
 Here are the results of our comparison.
 
-![](../figures/tutorial_outputs/zero_inflated_AIC1.png)
+<center><img src="report_figures/tutorial_outputs/zero_inflated_AIC1.png" title="zero_inflated_AIC1" alt="Img"/></center>
 
 As we can see, the zero-inflated negative binomial model we have constructed fits the data much better than the poisson model and the negative binomial model! To further emphasize that we have chosen our model correctly, lets build a zero-inflated poisson model and see how it fairs against the zero-inflated negative binomial model we constructed. This can be done like so:
 
@@ -417,7 +428,7 @@ AIC(poisson_model, negbinom_model, zero_inflated_poisson, zero_inflated_nbiom)
 
 Here are the results of the summary output:
 
-![](../figures/tutorial_outputs/zero_inflated_AIC2.png)
+<center><img src="report_figures/tutorial_outputs/zero_inflated_AIC2.png" title="zero_inflated_AIC2" alt="Img"/></center>
 
 As we can see, the negative binomial model (no zero-inflation) characterized the data more effectively than the zero-inflated poisson model. This indicates that even despite accounting for the large number of zeros, the data set contains more variability than that predicted from a Poisson distribution. In essence, adding more complexity to our basic negative binomial model improved the estimations considerably. From our AIC test of model fit, we can be confident that we have constructed the best model to represent our bracken data.
 
@@ -435,7 +446,7 @@ summary(zero_inflated_nbiom)
 
 Here is what the summary table should look something like.
 
-![](../figures/tutorial_outputs/zero_inflated_summary_table.png)
+<center><img src="report_figures/tutorial_outputs/zero_inflated_summary_table.png" title="zero_inflated_summary_table.png" alt="Img"/></center>
 
 The conditional model represents the response in the absence of zero-inflation. In standard GLM or GLMM models, only the "conditional model" is fit to the data under the assumption that zero-inflation is set at the default value. The zero-inflation model represents the probability of generating a structural zero not accounted for by the conditional model.
 
@@ -449,7 +460,7 @@ WAIT! Before we continue, we have to look futher in depth in our data collection
 
 In this study, observations were taken from two road types: (1) roads and (2) footpaths. Within each road, a total of 6 transects were laid out perpendicular to the road with an additional 5 quadrats placed within each transect. Here is a visual representation of the sampling strategy.
 
-![](../figures/tutorial_outputs/sampling_scheme.png)
+<center><img src="report_figures/tutorial_outputs/sampling_scheme.png" title="sampling_scheme" alt="Img"/></center>
 
 After visualizing the sampling scheme, we can see that not all of our observations are independent! What does this mean? This implies that bracken observations within the same road and same transect are more likely to be similar to each other. In essence, the measurement of one of our observations provides insight into another observation, meaning that our observations are not random. This is called pseudoreplication!
 
@@ -469,7 +480,7 @@ AIC(zero_inflated_nbiom, zero_inflated_nbiom2)
 
 Here are the results:
 
-![](../figures/tutorial_outputs/zero_inflated_AIC3.png)
+<center><img src="report_figures/tutorial_outputs/zero_inflated_AIC3.png" title="zero_inflated_AIC3" alt="Img"/></center>
 
 As we can see, including the two random effects improved the model fit of the data considerably. We can also test whether the inclusion the random effects are needed using a likelihood ratio test. The likelihood ratio test compares the two models with each other and determine whether including the random effects actually improve the model fit. This can be done like so:
 
@@ -479,7 +490,7 @@ anova(zero_inflated_nbiom, zero_inflated_nbiom2)
 
 Here is what the summary table should look like:
 
-![](../figures/tutorial_outputs/liklihood_ratio_test.png)
+<center><img src="report_figures/tutorial_outputs/liklihood_ratio_test.png" title="liklihood_ratio_test" alt="Img"/></center>
 
 A handy component of the likelihood ratio test is that it also shows the AIC. The p-value represents the significance of the random effects of the model, given that the fixed effects were set as constant between the two models.
 
@@ -497,7 +508,7 @@ AIC(zero_inflated_nbiom, zero_inflated_nbiom2, zero_inflated_nbiom3)
 
 Here are the results of the comparison:
 
-![](../figures/tutorial_outputs/zero_inflated_AIC4.png)
+<center><img src="report_figures/tutorial_outputs/zero_inflated_AIC4.png" title="zero_inflated_AIC4" alt="Img"/></center>
 
 From this test, we can see that adding further complexity to the model actually worsened the model fit. Similarly, it can be implied that the random effects we included had little effect on the generation process of structural zeros. We deduced that the zero-inflated negative binomial model with random effects on the conditional side of the formula was the best fit.
 
@@ -517,7 +528,10 @@ summary(zero_inflated_nbiom2)
 
 Here is what the summary table should look like:
 
-![](../figures/tutorial_outputs/final_model_summary1.png) ![](../figures/tutorial_outputs/final_model_summary2.png)
+<center><img src="report_figures/tutorial_outputs/final_model_summary1.png" title="final_model_summary1" alt="Img"/></center>
+
+<center><img src="report_figures/tutorial_outputs/final_model_summary2.png" title="final_model_summary2" alt="Img"/></center>
+
 
 First, the random effects are shown. The variance and standard deviations are displayed, as well as the sample size and dispersion parameter.
 
@@ -535,7 +549,9 @@ Finally, we can move on to the zero-inflation model part of the summary table. S
 
 Well done for completing the tutorial! Statistics can be quite confusing and intimidating, so hats off to you for sticking to it!
 
-![Source: <https://www.englishstamp.com/docs/stock/stamps/aseries/a053.jpg>](../figures/tutorial_images/well_done.png)
+<center><img src="report_figures/tutorial_images/well_done.png" title="well_done" alt="Img"/></center>
+
+Source: https://www.englishstamp.com/docs/stock/stamps/aseries/a053.jpg
 
 In this tutorial, you learned:
 
