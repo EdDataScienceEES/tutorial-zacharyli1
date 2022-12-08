@@ -532,6 +532,10 @@ Finally, we can move on to the zero-inflation model part of the summary table. S
 
 {: #conclude}
 
+Well done for completing the tutorial! Statistics can be quite confusing and intimidating, so hats off to you for sticking to it!
+
+![Source: <https://www.englishstamp.com/docs/stock/stamps/aseries/a053.jpg>](../figures/tutorial_images/well_done.png)
+
 In this tutorial, you learned:
 
 -   Why zero-inflated models are used in ecological modelling
@@ -572,3 +576,5 @@ Martin, T.G., Wintle, B.A., Rhodes, J.R., Kuhnert, P.M., Field, S.A., Low-Choy, 
 rdrr.io. (n.d.). glmmTMB: Fit Models with TMB in glmmTMB: Generalized Linear Mixed Models using Template Model Builder. [online] Available at: <https://rdrr.io/cran/glmmTMB/man/glmmTMB.html> [Accessed 6 Dec. 2022].
 
 ------------------------------------------------------------------------
+
+#### I would appreciate any feedback or suggestions you have on the tutorial! If you have any question or issues, please contact me at [zacharyli\@gmail.com](mailto:zacharyli@gmail.com){.email}
