@@ -49,8 +49,9 @@ All the files required to complete this tutorial can be found from [this reposit
 -   [Analyzing results](#analyze)
 
 6.  [Conclusion](#conclude)
-* [Further implications](#futher)
-* [References](#references)
+
+-   [Further implications](#futher)
+-   [References](#references)
 
 ------------------------------------------------------------------------
 
@@ -376,7 +377,7 @@ With the zero-inflation test completed, we have established our rationale for th
 
 ------------------------------------------------------------------------
 
-## Zero-inflated Models 
+## Zero-inflated Models
 
 {: #zeromodels}
 
@@ -554,22 +555,20 @@ Today, we explored the use of zero-inflated models, specifically Poisson and neg
 
 -   Modelling zero-inflated data available [here](https://fukamilab.github.io/BIO202/04-C-zero-data.html)
 
-***
+------------------------------------------------------------------------
 
 ## References for key information
 
 {: #references}
 
-Brooks, M.E., Kristensen, K., van Benthem, K.J., Magnusson, A., Berg, C.W., Nielsen, A., Skaug, H.J., Mächler, M. and Bolker, B.M. (2017). Modeling zero-inflated count data with glmmTMB. bioRxiv. doi:10.1101/132753.
+Brooks, M.E., Kristensen, K., van Benthem, K.J., Magnusson, A., Berg, C.W., Nielsen, A., Skaug, H.J., Mächler, M. and Bolker, B.M. (2017). Modeling zero-inflated count data with glmmTMB. bioRxiv. <doi:10.1101/132753>.
 
-Ford, C. (2016). Getting started with Negative Binomial Regression Modeling | University of Virginia Library Research Data Services + Sciences. [online] data.library.virginia.edu. Available at: https://data.library.virginia.edu/getting-started-with-negative-binomial-regression-modeling/.
+Ford, C. (2016). Getting started with Negative Binomial Regression Modeling \| University of Virginia Library Research Data Services + Sciences. [online] data.library.virginia.edu. Available at: <https://data.library.virginia.edu/getting-started-with-negative-binomial-regression-modeling/>.
 
-Hartig, F. (2022). Installing, loading and citing the package. [online] R-Packages. Available at: https://cran.r-project.org/web/packages/DHARMa/vignettes/DHARMa.html#zero-inflation-k-inflation-or-deficits [Accessed 5 Dec. 2022].
+Hartig, F. (2022). Installing, loading and citing the package. [online] R-Packages. Available at: <https://cran.r-project.org/web/packages/DHARMa/vignettes/DHARMa.html#zero-inflation-k-inflation-or-deficits> [Accessed 5 Dec. 2022].
 
-Martin, T.G., Wintle, B.A., Rhodes, J.R., Kuhnert, P.M., Field, S.A., Low-Choy, S.J., Tyre, A.J. and Possingham, H.P. (2005). Zero tolerance ecology: improving ecological inference by modelling the source of zero observations. Ecology Letters, 8(11), pp.1235–1246. doi:10.1111/j.1461-0248.2005.00826.x.
+Martin, T.G., Wintle, B.A., Rhodes, J.R., Kuhnert, P.M., Field, S.A., Low-Choy, S.J., Tyre, A.J. and Possingham, H.P. (2005). Zero tolerance ecology: improving ecological inference by modelling the source of zero observations. Ecology Letters, 8(11), pp.1235--1246. <doi:10.1111/j.1461-0248.2005.00826.x>.
 
-rdrr.io. (n.d.). glmmTMB: Fit Models with TMB in glmmTMB: Generalized Linear Mixed Models using Template Model Builder. [online] Available at: https://rdrr.io/cran/glmmTMB/man/glmmTMB.html [Accessed 6 Dec. 2022].
+rdrr.io. (n.d.). glmmTMB: Fit Models with TMB in glmmTMB: Generalized Linear Mixed Models using Template Model Builder. [online] Available at: <https://rdrr.io/cran/glmmTMB/man/glmmTMB.html> [Accessed 6 Dec. 2022].
 
-***
-
-
+------------------------------------------------------------------------
