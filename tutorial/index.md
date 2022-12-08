@@ -28,29 +28,29 @@ All the files required to complete this tutorial can be found from [this reposit
 
 1.  [Introduction to Zero-inflated Models](#intro)
 
-2.  [Model Trial and Error] (#part2)
+2.  [Model Trial and Error](#models)
 
--   Data distribution
--   Poisson model
+-   [Data distribution](#data)
+-   [Poisson model](#poisson)
 
-3.  [Negative Binomial Response]
+3.  [Negative Binomial Response](#negbin)
 
--   Model construction
--   Interpreting model results
+-   [Model construction](#construction)
+-   [Interpreting model results](#results)
 
-4.  [Zero-inflation Evaluation]
+4.  [Zero-inflation Evaluation](#evaluation)
 
--   Zero-inflation test
+-   [Zero-inflation test](#test)
 
-5.  [Zero-inflated Models](#zero-inflated-models-1)
+5.  [Zero-inflated Models](#zeromodels)
 
--   Interpreting summary table
--   Adding random effects
--   Analyzing results
+-   [Interpreting summary table](#summary)
+-   [Adding random effects](#random)
+-   [Analyzing results](#analyze)
 
-6.  [Conclusion]
-
--   Further implications
+6.  [Conclusion](#conclude)
+* [Further implications](#futher)
+* [References](#references)
 
 ------------------------------------------------------------------------
 
@@ -70,6 +70,8 @@ Data sets are deemed 'zero inflated' when the number of zero values is so large 
 ------------------------------------------------------------------------
 
 # Model Trial and Error
+
+{: #models}
 
 Let us begin our journey by exploring a data set containing information about an invasive species in Scotland, bracken!
 
@@ -119,7 +121,7 @@ Later, we will incorporate these factors into our model to determine whether roa
 
 ## Data distribution
 
-{: #distrib}
+{: #data}
 
 We have now established our research question as well as the variables we intend to incorporate in our study. Next, we will build on this knowledge by visualizing the data set as a histogram. This helps us gauge a better understanding of the type of distribution our data follows as well as assisting us in the model selection process.
 
@@ -185,7 +187,9 @@ Now that we have a good idea of how our data is distributed as well as our varia
 
 ------------------------------------------------------------------------
 
-## First model
+## Poisson model
+
+{: #poisson}
 
 When we begin to model data distributions with count data, it is common to start with a poisson regression. We can begin our modelling process by fitting a basic poisson model to our bracken data.
 
@@ -250,6 +254,8 @@ By comparing AIC values, we can deduce that the poisson model we have constructe
 
 ## Negative Binomial Response
 
+{: #negbin}
+
 One way to address our issue of overdispersed data is to use a Negative Binomial Regression. The negative binomial regression also describes non-negative count data similar to the Poisson distribution, except it does not hold the assumption that the mean and the variance are the same. In fact, it assumes that the variance increases quadratically relative to the mean, which means that the count data is more dispersed
 
 A negative binomial model has been cited on many instances in the literature for modelling data with a considerable number of zeros because it accounts for overdispersion. However, if the number of zeros exceeds the amount expected from a negative binomial distribution, we may have to take another approach.
@@ -257,6 +263,8 @@ A negative binomial model has been cited on many instances in the literature for
 ------------------------------------------------------------------------
 
 ## Model construction
+
+{: #construction}
 
 Let us build our negative binomial model using the package "MASS." For more information regarding the this package and the negative binomial regression, you can check out [this website](https://stats.oarc.ucla.edu/r/dae/negative-binomial-regression/). First, we have to load the specified library.
 
@@ -277,6 +285,8 @@ The format of the summary goes as follows. Below the call and deviance residuals
 ------------------------------------------------------------------------
 
 ## Interpreting model results
+
+{: #results}
 
 According to our model, the variable road type has a statistically significant effect on the number of bracken stands (p \< 0.01). The variable has a coefficient of 0.7656, meaning that the expected log count of bracken stands is 0.7656 higher in footpaths due to the effect of road type.
 
@@ -299,6 +309,8 @@ To review, we elected to model our bracken data with a negative binomial respons
 ------------------------------------------------------------------------
 
 ## Zero-inflation evaluation
+
+{: #evaluation}
 
 Zero-inflation is a unique case of overdispersion, where there are more zeros in the data set than expected in a fitted model. From our initial analysis, we determined that 49% of the observations for number of bracken stands were zeros. It is important to remember that just because a data set contains a lot of zeros does not mean it is necessarily zero-inflated!
 
@@ -340,6 +352,8 @@ Similar to a linear regression, the Q-Q plot residuals graph shows an overall di
 
 ## Zero-inflation Test
 
+{: #test}
+
 The benefit of using the DHARMa package is that it has its own test for zero-inflation of the data. In essence, the distribution of the expected zeros will be compared with the observed zeros in our bracken data set. Let us run the zero-inflation test and discuss the implications of its results.
 
 ``` r
@@ -362,7 +376,9 @@ With the zero-inflation test completed, we have established our rationale for th
 
 ------------------------------------------------------------------------
 
-## Zero-inflated Models {#zero-inflated-models-1}
+## Zero-inflated Models 
+
+{: #zeromodels}
 
 Before we construct our zero-inflated model, we should consider what the excess number of zeros means in the ecological context of our study. The sampling zeros in the data set can be modelled with a Poisson or negative binomial response, which is a result that could have occurred due to chance. More specifically, the sampling zeros in our data set are attributed to the fluctuations in the number of bracken stands in different road types.
 
@@ -407,6 +423,8 @@ As we can see, the negative binomial model (no zero-inflation) characterized the
 
 ## Interpreting summary table
 
+{: #summary}
+
 Now that we have gone through all the checks, we can see the results of our analysis! We can do this by using the code:
 
 ``` r
@@ -424,6 +442,8 @@ WAIT! Before we continue, we have to look futher in depth in our data collection
 ------------------------------------------------------------------------
 
 ## Adding random effects
+
+{: #random}
 
 In this study, observations were taken from two road types: (1) roads and (2) footpaths. Within each road, a total of 6 transects were laid out perpendicular to the road with an additional 5 quadrats placed within each transect. Here is a visual representation of the sampling strategy.
 
@@ -485,6 +505,8 @@ Now that we have thoroughly considered the entire context of the study, we can c
 
 ## Analyzing results
 
+{: #analyze}
+
 Similar to the first zero-inflated model we constructed, we can use the summary() function to extrapolate our findings.
 
 ``` r
@@ -507,6 +529,8 @@ Finally, we can move on to the zero-inflation model part of the summary table. S
 
 ## Conclusion
 
+{: #conclude}
+
 In this tutorial, you learned:
 
 -   Why zero-inflated models are used in ecological modelling
@@ -522,8 +546,30 @@ In this tutorial, you learned:
 
 ## Further implications
 
+{: #further}
+
 Today, we explored the use of zero-inflated models, specifically Poisson and negative binomial to model count data with an excess of zeros. However, non-count data can also be modelled using a zero-inflated binomial model, which is more complex and outside the scope of this tutorial. Furthermore, graphing zero-inflated models was not discussed in this tutorial, as it is more advanced and outside the bubble of expertise. However, here are some resources to explore if you are further interested in zero-inflated models!
 
 -   More information on zero-inflated negative binomial regression available [here](https://stats.oarc.ucla.edu/r/dae/zinb/)
 
 -   Modelling zero-inflated data available [here](https://fukamilab.github.io/BIO202/04-C-zero-data.html)
+
+***
+
+## References for key information
+
+{: #references}
+
+Brooks, M.E., Kristensen, K., van Benthem, K.J., Magnusson, A., Berg, C.W., Nielsen, A., Skaug, H.J., Mächler, M. and Bolker, B.M. (2017). Modeling zero-inflated count data with glmmTMB. bioRxiv. doi:10.1101/132753.
+
+Ford, C. (2016). Getting started with Negative Binomial Regression Modeling | University of Virginia Library Research Data Services + Sciences. [online] data.library.virginia.edu. Available at: https://data.library.virginia.edu/getting-started-with-negative-binomial-regression-modeling/.
+
+Hartig, F. (2022). Installing, loading and citing the package. [online] R-Packages. Available at: https://cran.r-project.org/web/packages/DHARMa/vignettes/DHARMa.html#zero-inflation-k-inflation-or-deficits [Accessed 5 Dec. 2022].
+
+Martin, T.G., Wintle, B.A., Rhodes, J.R., Kuhnert, P.M., Field, S.A., Low-Choy, S.J., Tyre, A.J. and Possingham, H.P. (2005). Zero tolerance ecology: improving ecological inference by modelling the source of zero observations. Ecology Letters, 8(11), pp.1235–1246. doi:10.1111/j.1461-0248.2005.00826.x.
+
+rdrr.io. (n.d.). glmmTMB: Fit Models with TMB in glmmTMB: Generalized Linear Mixed Models using Template Model Builder. [online] Available at: https://rdrr.io/cran/glmmTMB/man/glmmTMB.html [Accessed 6 Dec. 2022].
+
+***
+
+
